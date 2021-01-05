@@ -10,7 +10,7 @@ bare: stage-0.$(EXT) stage-1.$(EXT) stage-2.$(EXT) stage-3.$(EXT) stage-4.$(EXT)
 	docker build -t innovanon/$@ $(TEST) .
 commit:
 	git add .
-	git commit -m '[Makefile] commit'
+	git commit -m '[Makefile] commit' || :
 	git pull
 	git push
 
