@@ -1,0 +1,6 @@
+SocksPort 127.0.0.1:9050
+User debian-tor
+DataDirectory /var/lib/tor
+#Log stdout
+
+
