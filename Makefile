@@ -16,19 +16,19 @@ commit:
 
 stage-0.tgz: stage-0/.sentinel
 	cd $(shell dirname $<) && \
-	tar acvf ../$@ # --owner=0 --group=0 .
+	tar acvf ../$@ . # --owner=0 --group=0 .
 stage-1.tgz: stage-1/.sentinel
 	cd $(shell dirname $<) && \
-	tar acvf ../$@ # --owner=0 --group=0 .
+	tar acvf ../$@ . # --owner=0 --group=0 .
 stage-2.tgz: stage-2/.sentinel
 	cd $(shell dirname $<) && \
-	tar acvf ../$@ # --owner=0 --group=0 .
+	tar acvf ../$@ . # --owner=0 --group=0 .
 stage-3.tgz: stage-3/.sentinel
 	cd $(shell dirname $<) && \
-	tar acvf ../$@ # --owner=0 --group=0 .
+	tar acvf ../$@ . # --owner=0 --group=0 .
 stage-4.tgz: stage-4/.sentinel
 	cd $(shell dirname $<) && \
-	tar acvf ../$@ # --owner=0 --group=0 .
+	tar acvf ../$@ . # --owner=0 --group=0 .
 
 stage-0/.sentinel: $(shell find stage-0 -type f)
 	openssl rand -out $@ $(shell echo '2 ^ 10' | bc )
