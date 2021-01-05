@@ -30,12 +30,12 @@ jobs:
           keys:
             - v1-{{ .Branch }}
           paths:
-            - /caches/app.tar
+            - /caches/bare.tar
       - run:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            docker load -i /caches/lfs-bare.tar | true
+            docker load -i /caches/bare.tar | true
       - run:
           name: Build application Docker image
           command: |
@@ -48,11 +48,11 @@ jobs:
           name: Save Docker image layer cache
           command: |
             mkdir -p /caches
-            docker save -o /caches/lfs-bare.tar lfs-bare
+            docker save -o /caches/bare.tar bare
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/lfs-bare.tar
+            - /caches/bare.tar
       #- run:
       #    name: Run tests
       #    command: |
@@ -63,6 +63,6 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               #docker tag lfs-bare "InnovAnon-Inc/lfs-bare:${CIRCLE_SHA1}"
               #docker push           "InnovAnon-Inc/lfs-bare:${CIRCLE_SHA1}"
-              docker push innovanon/lfs-bare
+              docker push innovanon/bare
             fi
 
