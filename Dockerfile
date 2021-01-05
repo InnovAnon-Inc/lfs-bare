@@ -93,7 +93,7 @@ RUN tar xf /tmp/stage-3.$EXT -C /                  \
  && apt install   $(/tmp/dpkg.list)                \
  && cd /usr/local/bin                              \
  && shc -rUf     support-wrapper                   \
- && rm    -v     support-wrapper{,.x.c}            \
+ && rm    -v     support-wrapper.x.c            \
  && chmod -v 0555 support-wrapper.x                \
  && apt-mark auto $(/tmp/dpkg.list)                \
  && rm -v           /tmp/dpkg.list                 \
@@ -106,11 +106,14 @@ RUN tar xf /tmp/stage-3.$EXT -C /                  \
            /var/log/apt/term.log                   \
            /var/log/dpkg.log                       \
            /var/tmp/*
+ #&& rm    -v     support-wrapper{,.x.c}            \
 
 FROM base as base-1
 # TODO
 #COPY --from=support /usr/local/bin/support-wrapper.x \
 #                    /usr/local/bin/support-wrapper
+COPY --from=support /usr/local/bin/support-wrapper \
+                    /usr/local/bin/support-wrapper
 #SHELL ["/bin/bash", "-c"]
 
 FROM base-1 as lfs-bare
