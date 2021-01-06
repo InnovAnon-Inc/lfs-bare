@@ -147,3 +147,10 @@ RUN tar xf /tmp/stage-4.$EXT -C /                   \
  && chown -vR lfs:lfs /home/lfs
  #&& chown  -R lfs:lfs /var/lib/tor
 
+#FROM lfs-bare as test
+#USER lfs
+#RUN sleep 31 \
+# && tsocks wget -O- https://3g2upl4pq6kufc4m.onion
+#
+#FROM lfs-bare as final
+
