@@ -35,11 +35,13 @@ command -v support
 tor -f "$CONF" --verify-config
 
 nohup tor -f "$CONF" & T="$!"
+# shellcheck disable=SC2064
 trap "kill $T ; wait $T" 0
 sleep 11
 kill -0   "$T"
 ( renice -n -20 "$$" 2> /dev/null || :
   nohup support & S="$!"
+  # shellcheck disable=SC2064
   trap "kill $S ; wait $S" 0
   sleep 7
   kill -0   "$S"
