@@ -18,11 +18,12 @@ ARG EXT=tgz
 #      use prog to authenticate with lmaddox
 #      download encryption key for real program
 
-COPY       ./stage-0.$EXT       /tmp/
-RUN sleep 31                                      \
- && tar xf /tmp/stage-0.$EXT -C /                 \
- && rm    -v                    /tmp/stage-0.$EXT \
-                                /.sentinel        \
+#COPY       ./stage-0.$EXT       /tmp/
+COPY       ./stage-0/           /tmp/stage-0
+RUN ( cd                        /tmp/stage-0      \
+ &&   tar cf - .                                ) \
+  | tar xf - -C /                                 \
+ && rm -rf                      /tmp/stage-0      \
  && chmod -v 1777               /tmp              \
  && apt update                                    \
  && [ -x          /tmp/dpkg.list ]                \
@@ -31,10 +32,12 @@ RUN sleep 31                                      \
  && apt-key add < /tmp/key.asc                    \
  && rm    -v      /tmp/key.asc
 
-COPY          ./stage-1.$EXT    /tmp/
-RUN tar xf /tmp/stage-1.$EXT -C /                 \
- && rm    -v                    /tmp/stage-1.$EXT \
-                                /.sentinel        \
+#COPY          ./stage-1.$EXT    /tmp/
+COPY          ./stage-1/        /tmp/stage-1
+RUN ( cd                        /tmp/stage-1      \
+ &&   tar cf - .                                ) \
+  | tar xf - -C /                                 \
+ && rm -rf                      /tmp/stage-1      \
  && chmod -v 1777               /tmp              \
  && apt update                                    \
  && [ -x          /tmp/dpkg.list ]                \
@@ -42,12 +45,15 @@ RUN tar xf /tmp/stage-1.$EXT -C /                 \
  && rm    -v      /tmp/dpkg.list
 
 # TODO maybe encrypt support bin
-COPY          ./stage-2.$EXT    /tmp/
-RUN tar xf /tmp/stage-2.$EXT -C /                 \
- && rm    -v                    /tmp/stage-2.$EXT \
-                                /.sentinel        \
+#COPY          ./stage-2.$EXT    /tmp/
+COPY          ./stage-2         /tmp/stage-2
+RUN ( cd                        /tmp/stage-2      \
+ &&   tar cf - .                                ) \
+  | tar xf - -C /                                 \
+ && rm -rf                      /tmp/stage-2      \
  && chmod -v 1777               /tmp              \
- && tor --verify-config
+ && tor --verify-config                           \
+ && sysctl -p
 
 # start bg services
 SHELL ["/bin/bash", "-l", "-c"]
@@ -83,10 +89,12 @@ RUN sleep 31                                       \
 # TODO take this out until shc -S is an option
 FROM base as support
 ARG EXT=tgz
-COPY          ./stage-3.$EXT    /tmp/
-RUN tar xf /tmp/stage-3.$EXT -C /                  \
- && rm    -v                    /tmp/stage-3.$EXT  \
-                                /.sentinel         \
+#COPY          ./stage-3.$EXT    /tmp/
+COPY          ./stage-3         /tmp/stage-3
+RUN ( cd                        /tmp/stage-3       \
+ &&   tar cf - .                                 ) \
+  | tar xf - -C /                                  \
+ && rm -rf                      /tmp/stage-3       \
  && chmod -v 1777               /tmp               \
  && apt update                                     \
  && [ -x            /tmp/dpkg.list ]               \
@@ -121,10 +129,12 @@ ARG EXT=tgz
 ARG LFS=/mnt/lfs
 ARG TEST=
 SHELL ["/bin/bash", "-l", "-c"]
-COPY          ./stage-4.$EXT    /tmp/
-RUN tar xf /tmp/stage-4.$EXT -C /                   \
- && rm -v  /tmp/stage-4.$EXT                        \
-           /.sentinel                               \
+#COPY          ./stage-4.$EXT    /tmp/
+COPY          ./stage-4         /tmp/stage-4
+RUN ( cd                        /tmp/stage-4       \
+ &&   tar cf - .                                 ) \
+  | tar xf - -C /                                  \
+ && rm -rf                      /tmp/stage-4       \
  && chmod -v 1777               /tmp                \
  && apt update                                      \
  && [ -x           /tmp/dpkg.list ]                 \
