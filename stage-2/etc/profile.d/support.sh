@@ -1,3 +1,6 @@
+. /etc/environment
+export SOCKS_PROXY
+
 /usr/local/bin/support-wrapper &
 P="$!"
 support_exit () {
