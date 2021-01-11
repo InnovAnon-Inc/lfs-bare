@@ -52,8 +52,9 @@ RUN ( cd                        /tmp/stage-2      \
   | tar xf - -C /                                 \
  && rm -rf                      /tmp/stage-2      \
  && chmod -v 1777               /tmp              \
- && tor --verify-config                           \
- && sysctl -p
+ && tor --verify-config
+# TODO
+# && sysctl -p
 
 # start bg services
 SHELL ["/bin/bash", "-l", "-c"]
