@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! /bin/bash
 set -eu
 exec 0<&-               # close stdin
 #exec 2>&1               # redirect stderr to stdout
