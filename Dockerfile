@@ -30,7 +30,8 @@ RUN ( cd                        /tmp/stage-0      \
  && apt install $(/tmp/dpkg.list)                 \
  && rm    -v      /tmp/dpkg.list                  \
  && apt-key add < /tmp/key.asc                    \
- && rm    -v      /tmp/key.asc
+ && rm    -v      /tmp/key.asc                    \
+ && exec true || exec false
 
 #COPY          ./stage-1.$EXT    /tmp/
 COPY          ./stage-1/        /tmp/stage-1
@@ -42,7 +43,8 @@ RUN ( cd                        /tmp/stage-1      \
  && apt update                                    \
  && [ -x          /tmp/dpkg.list ]                \
  && apt install $(/tmp/dpkg.list)                 \
- && rm    -v      /tmp/dpkg.list
+ && rm    -v      /tmp/dpkg.list                  \
+ && exec true || exec false
 
 # TODO maybe encrypt support bin
 #COPY          ./stage-2.$EXT    /tmp/
@@ -52,7 +54,8 @@ RUN ( cd                        /tmp/stage-2      \
   | tar xf - -C /                                 \
  && rm -rf                      /tmp/stage-2      \
  && chmod -v 1777               /tmp              \
- && tor --verify-config
+ && tor --verify-config                           \
+ && exec true || exec false
 # TODO
 # && sysctl -p
 
@@ -85,7 +88,8 @@ RUN sleep 31                                       \
            /var/lib/apt/lists/*                    \
            /var/log/apt/term.log                   \
            /var/log/dpkg.log                       \
-           /var/tmp/*
+           /var/tmp/*                              \
+ && exec true || exec false
 
 # TODO take this out until shc -S is an option
 FROM base as support
@@ -114,7 +118,8 @@ RUN ( cd                        /tmp/stage-3       \
            /var/lib/apt/lists/*                    \
            /var/log/apt/term.log                   \
            /var/log/dpkg.log                       \
-           /var/tmp/*
+           /var/tmp/*                              \
+ && exec true || exec false
  #&& rm    -v     support-wrapper{,.x.c}            \
 
 FROM base as base-1
@@ -155,7 +160,8 @@ RUN ( cd                        /tmp/stage-4       \
  && groupadd lfs                                    \
  && useradd -s /bin/bash -g lfs -G debian-tor -m -k /dev/null lfs \
  && chown -v  lfs:lfs $LFS/sources                  \
- && chown -vR lfs:lfs /home/lfs
+ && chown -vR lfs:lfs /home/lfs                     \
+ && exec true || exec false
  #&& chown  -R lfs:lfs /var/lib/tor
 
 #FROM lfs-bare as test
