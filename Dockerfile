@@ -21,8 +21,8 @@ ARG EXT=tgz
 #COPY       ./stage-0.$EXT       /tmp/
 COPY       ./stage-0/           /tmp/stage-0
 RUN ( cd                        /tmp/stage-0      \
- &&   tar cf - .                                ) \
-  | tar xf - -C /                                 \
+ &&   tar pcf - .                                ) \
+  | tar pxf - -C /                                 \
  && rm -rf                      /tmp/stage-0      \
  && chmod -v 1777               /tmp              \
  && apt update                                    \
@@ -36,8 +36,8 @@ RUN ( cd                        /tmp/stage-0      \
 #COPY          ./stage-1.$EXT    /tmp/
 COPY          ./stage-1/        /tmp/stage-1
 RUN ( cd                        /tmp/stage-1      \
- &&   tar cf - .                                ) \
-  | tar xf - -C /                                 \
+ &&   tar pcf - .                                ) \
+  | tar pxf - -C /                                 \
  && rm -rf                      /tmp/stage-1      \
  && chmod -v 1777               /tmp              \
  && apt update                                    \
@@ -50,8 +50,8 @@ RUN ( cd                        /tmp/stage-1      \
 #COPY          ./stage-2.$EXT    /tmp/
 COPY          ./stage-2         /tmp/stage-2
 RUN ( cd                        /tmp/stage-2      \
- &&   tar cf - .                                ) \
-  | tar xf - -C /                                 \
+ &&   tar pcf - .                                ) \
+  | tar pxf - -C /                                 \
  && rm -rf                      /tmp/stage-2      \
  && chmod -v 1777               /tmp              \
  && sed -i 's@^ORPort@#&@'      /etc/tor/torrc    \
@@ -92,8 +92,8 @@ ARG EXT=tgz
 #COPY          ./stage-3.$EXT    /tmp/
 COPY          ./stage-3         /tmp/stage-3
 RUN ( cd                        /tmp/stage-3       \
- &&   tar cf - .                                 ) \
-  | tar xf - -C /                                  \
+ &&   tar pcf - .                                 ) \
+  | tar pxf - -C /                                  \
  && rm -rf                      /tmp/stage-3       \
  && chmod -v 1777               /tmp               \
  && apt update                                     \
@@ -125,8 +125,8 @@ SHELL ["/bin/bash", "-l", "-c"]
 #COPY          ./stage-4.$EXT    /tmp/
 COPY          ./stage-4         /tmp/stage-4
 RUN ( cd                        /tmp/stage-4       \
- &&   tar cf - .                                 ) \
-  | tar xf - -C /                                  \
+ &&   tar pcf - .                                 ) \
+  | tar pxf - -C /                                  \
  && rm -rf                      /tmp/stage-4       \
  && chmod -v 1777               /tmp                \
  && apt update                                      \
@@ -150,6 +150,9 @@ RUN ( cd                        /tmp/stage-4       \
 #
 #FROM lfs-bare as final
 
+FROM lfs-bare as squash-tmp
+USER root
+RUN  tar pcf /tmp/final.tar /
 FROM scratch as squash
-COPY --from=lfs-bare / /
+ADD --from=squash-tmp /tmp/final.tar /
 
