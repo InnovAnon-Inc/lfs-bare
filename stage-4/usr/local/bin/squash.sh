@@ -22,6 +22,7 @@ tar pcf     /final.tar                  \
   '--exclude=/var/log/*'                \
   '--exclude=/var/tmp/*'                \
   --exclude=nohup.out                   \
-  /
+  bin etc home lib lib32 lib64 libx32   \
+  usr root sbin srv opt var
 mv -v {,/tmp}/final.tar
 
