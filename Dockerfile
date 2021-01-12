@@ -54,6 +54,9 @@ RUN ( cd                        /tmp/stage-2      \
   | tar xf - -C /                                 \
  && rm -rf                      /tmp/stage-2      \
  && chmod -v 1777               /tmp              \
+ && sed -i 's@^ORPort@#&@'      /etc/tor/torrc    \
+ && echo 'SOCKSPolicy accept 127.0.0.1' >> /etc/tor/torrc \
+ && echo 'SOCKSPolicy reject *'         >> /etc/tor/torrc \
  && tor --verify-config                           \
  && exec true || exec false
 # TODO

@@ -10,20 +10,6 @@ exec 0<&-               # close stdin
 #  set -vx               # enable tracing instead
 #fi
 
-#nohup bash -c 'support &'
-#container=docker         \
-#/usr/lib/systemd/systemd \
-#  --log-level=info       \
-#  --unit=tor.service     &
-#P="$!"
-#trap "kill $P ; wait $P" 0
-#container=docker            \
-#nohup /sbin/init            &    P="$!"
-#systemctl start tor support || exit $?
-#trap "systemctl stop support tor ; kill $P ; wait $P" 0
-
-#[ "$(whoami)" = debian-user ]
-#[ "$(whoami)" = root ]
 case "$(whoami)" in
   root) CONF=/etc/tor/torrc.root ;;
   #lfs)  CONF=/etc/tor/torrc      ;;
