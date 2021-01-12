@@ -80,15 +80,7 @@ RUN sleep 31                                       \
       $(command -v xz     || echo /usr/bin/xz)     \
       xz     $(command -v pixz)   200              \
  && apt full-upgrade                               \
- && apt autoremove                                 \
- && apt clean                                      \
- && rm -rf /tmp/*                                  \
-           /var/log/alternatives.log               \
-           /var/log/apt/history.log                \
-           /var/lib/apt/lists/*                    \
-           /var/log/apt/term.log                   \
-           /var/log/dpkg.log                       \
-           /var/tmp/*                              \
+ && clean.sh                                       \
  && exec true || exec false
 
 # TODO take this out until shc -S is an option
@@ -110,15 +102,7 @@ RUN ( cd                        /tmp/stage-3       \
  && chmod -v 0555 support-wrapper.x                \
  && apt-mark auto $(/tmp/dpkg.list)                \
  && rm -v           /tmp/dpkg.list                 \
- && apt autoremove                                 \
- && apt clean                                      \
- && rm -rf /tmp/*                                  \
-           /var/log/alternatives.log               \
-           /var/log/apt/history.log                \
-           /var/lib/apt/lists/*                    \
-           /var/log/apt/term.log                   \
-           /var/log/dpkg.log                       \
-           /var/tmp/*                              \
+ && clean.sh                                       \
  && exec true || exec false
  #&& rm    -v     support-wrapper{,.x.c}            \
 
@@ -146,15 +130,7 @@ RUN ( cd                        /tmp/stage-4       \
  && [ -x           /tmp/dpkg.list ]                 \
  && apt install  $(/tmp/dpkg.list)                  \
  && rm    -v       /tmp/dpkg.list                  \
- && apt autoremove                                 \
- && apt clean                                      \
- && rm -rf /tmp/*                                  \
-           /var/log/alternatives.log               \
-           /var/log/apt/history.log                \
-           /var/lib/apt/lists/*                    \
-           /var/log/apt/term.log                   \
-           /var/log/dpkg.log                       \
-           /var/tmp/*                              \
+ && clean.sh                                       \
  && mkdir -vp         $LFS/sources                  \
  && chmod -v a+wt     $LFS/sources                  \
  && groupadd lfs                                    \
