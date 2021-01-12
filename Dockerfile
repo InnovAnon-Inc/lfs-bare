@@ -161,6 +161,7 @@ COPY --from=lfs-bare / /
 FROM squash as test
 USER lfs
 RUN tor --verify-config
+USER root
 RUN apt update
 RUN apt full-upgrade
 

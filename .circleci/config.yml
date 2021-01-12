@@ -10,6 +10,8 @@ workflows:
       - build:
           context:
             - default
+          post-steps:
+            - jira/notify
 
 jobs:
   build:
