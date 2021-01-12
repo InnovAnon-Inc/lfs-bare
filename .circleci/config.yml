@@ -84,4 +84,14 @@ jobs:
                 --header 'Content-Type: application/json' \
                 -u "${BOOK_API_TOKEN}:"
             fi
+      - run:
+          name: Push upstream (signer)
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              curl --location --request POST \
+                'https://circleci.com/api/v2/project/github/InnovAnon-Inc/lfs-signer/pipeline' \
+                --header 'Content-Type: application/json' \
+                -u "${SIGNER_API_TOKEN}:"
+            fi
+
 
