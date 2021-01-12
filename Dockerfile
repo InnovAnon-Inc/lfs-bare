@@ -152,7 +152,7 @@ RUN ( cd                        /tmp/stage-4       \
 
 FROM lfs-bare as squash-tmp
 USER root
-RUN  tar pcf /tmp/final.tar /
+RUN  tar pcf /tmp/final.tar --exclude=/tmp/final.tar --one-file-system /
 FROM scratch as squash
 ADD --from=squash-tmp /tmp/final.tar /
 
