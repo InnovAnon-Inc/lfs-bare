@@ -63,7 +63,7 @@ jobs:
               #docker tag lfs-bare "InnovAnon-Inc/lfs-bare:${CIRCLE_SHA1}"
               #docker push           "InnovAnon-Inc/lfs-bare:${CIRCLE_SHA1}"
               docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-              docker push innovanon/bare
+              docker push innovanon/lfs-bare
             fi
       - run:
           name: Push upstream (builder)
