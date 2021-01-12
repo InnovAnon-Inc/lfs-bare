@@ -66,4 +66,13 @@ jobs:
               docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
               docker push innovanon/bare
             fi
+      - run:
+          name: Push upstream
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              curl --location --request POST \
+                'https://circleci.com/api/v2/project/github/InnovAnon-Inc/builder/pipeline' \
+                --header 'Content-Type: application/json' \
+                -u "${API_TOKEN}:"
+            fi
 
