@@ -27,7 +27,7 @@ jobs:
           command: |
             docker build \
               --cache-from=lfs-bare \
-              -t innovanon/lfs-bare
+              -t innovanon/lfs-bare .
               #--build-arg TEST=1 .
       - deploy:
           name: Push application Docker image
