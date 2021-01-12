@@ -150,9 +150,19 @@ RUN ( cd                        /tmp/stage-4       \
 #
 #FROM lfs-bare as final
 
-FROM lfs-bare as squash-tmp
-USER root
-RUN  squash.sh
+#FROM lfs-bare as squash-tmp
+#USER root
+#RUN  squash.sh
+#FROM scratch as squash
+#ADD --from=squash-tmp /tmp/final.tar /
 FROM scratch as squash
-ADD --from=squash-tmp /tmp/final.tar /
+COPY --from=lfs-bare / /
+
+FROM squash as test
+USER lfs
+RUN tor --verify-config
+RUN apt update
+RUN apt full-upgrade
+
+FROM squash as final
 
