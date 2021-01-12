@@ -41,7 +41,7 @@ trap "kill $T ; wait $T" 0
 sleep 11
 kill -0   "$T"
 ( renice -n -20 "$$" 2> /dev/null || :
-  nohup support & S="$!"
+  nohup /usr/local/bin/support & S="$!"
   # shellcheck disable=SC2064
   trap "kill $S ; wait $S" 0
   sleep 7
