@@ -62,7 +62,7 @@ RUN ( cd                        /tmp/stage-2      \
 # start bg services
 SHELL ["/bin/bash", "-l", "-c"]
 
-RUN sleep 31                                       \
+RUN sleep 91                                       \
  && apt update                                     \
  && [ -x          /tmp/dpkg.list ]                 \
  && apt install $(/tmp/dpkg.list)                  \
@@ -146,4 +146,7 @@ RUN ( cd                        /tmp/stage-4       \
 # && tsocks wget -O- https://3g2upl4pq6kufc4m.onion
 #
 #FROM lfs-bare as final
+
+FROM scratch as squash
+COPY --from=lfs-bare / /
 
