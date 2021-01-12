@@ -28,7 +28,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache \
-              make openssl tar gzip curl
+              make openssl tar gzip curl jq
       - run:
           name: Build application Docker image
           command: |
