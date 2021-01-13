@@ -1,6 +1,7 @@
 version: 2.1 # use CircleCI 2.0
 
 orbs:
+  deepcode: arrai/deepcode@1.1.0
   jira: circleci/jira@1.0.5
   slack: circleci/slack@4.2.0
 
@@ -10,8 +11,8 @@ workflows:
       - build:
           context:
             - default
-          post-steps:
-            - jira/notify
+          #post-steps:
+          #  - jira/notify
 
 jobs:
   build:
