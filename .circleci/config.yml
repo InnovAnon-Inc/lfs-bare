@@ -11,8 +11,8 @@ workflows:
       - build:
           context:
             - default
-          #post-steps:
-          #  - jira/notify
+          post-steps:
+            - jira/notify
 
 jobs:
   build:
