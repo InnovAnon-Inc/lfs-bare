@@ -168,4 +168,4 @@ RUN ( cd                        /tmp/stage-4       \
 #
 #FROM squash as final
 
-FROM lfs-bare as final
+FROM lfs-bare
